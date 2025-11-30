@@ -23,35 +23,6 @@ window.onload = () => {
 
     d3.csv("cars.csv").then(function(data) {
 
-      //checking unique values for selected attributes -> checking for na values
-      //in this case no na values
-
-      const horsepowerValues = data.map(d => d['Horsepower(HP)']);
-
-
-      const uniqueHorsepowerStrings = [...new Set(horsepowerValues)]
-            .sort((a, b) => +a - +b);
-
-      const dealerCostValues = data.map(d => d['Dealer Cost']);
-      const uniqueDealerCostStrings = [...new Set(dealerCostValues)]
-          .sort((a, b) => +a - +b);
-
-      console.log("Einzigartige Werte (Strings) in Dealer Cost:", uniqueDealerCostStrings);
-
-      const typeValues = data.map(d => d.Type);
-      const uniqueTypeStrings = [...new Set(typeValues)].sort();
-
-      console.log("Einzigartige Werte (Strings) in Type:", uniqueTypeStrings);
-
-      // --- Debugging für Weight (Größe) ---
-      const weightValues = data.map(d => d.Weight); // Da 'Weight' keine Leerzeichen hat
-      const uniqueWeightStrings = [...new Set(weightValues)]
-          .sort((a, b) => +a - +b);
-
-      console.log("Einzigartige Werte (Strings) in Weight:", uniqueWeightStrings);
-
-      console.log("Einzigartige Werte (Strings) in Horsepower:", uniqueHorsepowerStrings);
-        //convert types of data
 
         data.forEach(d => {
           //convert attributes to numeric if applicable
@@ -74,16 +45,14 @@ window.onload = () => {
 
 
 
-        //console.log("Daten erfolgreich geladen. Gefilterte Punkte:", filteredData.length);
-        console.log("Erster Datenpunkt:", data[0]);
-    }).catch(error => {
-    console.error("Fehler beim Laden der CSV-Datei:", error);
-
-    const filteredData = data.filter(d =>
+        //console.log("Daten erfolgreich geladen. Gefilterte Punkte:", data.length);
+        const filteredData = data.filter(d =>
             !isNaN(d.Horsepower) && !isNaN(d.Dealer_Cost) && !isNaN(d.Weight)
         );
 
         console.log("Nutzbare Punkte nach Filterung:", filteredData.length);
+        console.log("Erster Datenpunkt (gefiltert):", filteredData[0]);
+
 
 
 
@@ -109,7 +78,21 @@ window.onload = () => {
             .domain(typeDomain)
             .range(d3.schemeCategory10);
 
+        // 4.1. X-Achse und Label (Horsepower)
+        svg.append("g")
+            .attr("transform", `translate(0,${height})`) //moving x axis from top to bottom
+            .call(d3.axisBottom(xScale).ticks(10))
+            .append("text")
+            .attr("x", width/2).attr("y", 45).attr("fill", "black")
+            .style("text-anchor", "middle").text("Horsepower (PS)");
 
+        // 4.2. Y-Achse und Label (Dealer Cost)
+        svg.append("g")
+            .call(d3.axisLeft(yScale).ticks(10, "$.2s"))
+            .append("text")
+            .attr("transform", "rotate(-90)").attr("y", 0 - margin.left + 15)
+            .attr("x", 0 - (height / 2)).attr("fill", "black")
+            .style("text-anchor", "middle").text("Dealer Cost (USD)");
 
     }).catch(error => {
         console.error("Fehler beim Laden der CSV-Datei:", error);
