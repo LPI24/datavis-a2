@@ -6,7 +6,7 @@ window.onload = () => {
     //1. Define Setup and Dimensions
 
 
-    const margin = {top: 40, right: 150, bottom: 60, left: 70};
+    const margin = {top: 40, right: 200, bottom: 60, left: 70};
     const width = 800 - margin.left - margin.right; // Breite des eigentlichen Plots
     const height = 500 - margin.top - margin.bottom; // Höhe des eigentlichen Plots
 
@@ -78,7 +78,9 @@ window.onload = () => {
             .domain(typeDomain)
             .range(d3.schemeCategory10);
 
-        // 4.1. X-Achse und Label (Horsepower)
+
+//Draw Axis
+        // 4.1. X-Axis and Label (Horsepower)
         svg.append("g")
             .attr("transform", `translate(0,${height})`) //moving x axis from top to bottom
             .call(d3.axisBottom(xScale).ticks(10))
@@ -86,13 +88,40 @@ window.onload = () => {
             .attr("x", width/2).attr("y", 45).attr("fill", "black")
             .style("text-anchor", "middle").text("Horsepower (PS)");
 
-        // 4.2. Y-Achse und Label (Dealer Cost)
+        // 4.2. Y-Axis and Label (Dealer Cost)
         svg.append("g")
             .call(d3.axisLeft(yScale).ticks(10, "$.2s"))
             .append("text")
             .attr("transform", "rotate(-90)").attr("y", 0 - margin.left + 15)
             .attr("x", 0 - (height / 2)).attr("fill", "black")
             .style("text-anchor", "middle").text("Dealer Cost (USD)");
+
+
+//draw legend and data points
+
+        //legend
+        // right next to plot area
+        const legend = svg.append("g")
+            .attr("transform",`translate(${width +20}, 0)`)
+
+        legend.append("text")
+            .attr("x", 0).attr("y", -15)
+            .style("text-anchor", "start").style("font-weight", "bold").text("Vehicle Type (Color)");
+
+        //generating dots
+        legend.selectAll(".legend-dot")
+            .data(typeDomain)
+            .enter().append("circle")
+                .attr("cx", 0).attr("cy", (d,i) => i*20) //space between dots
+                .attr("r", 5).style("fill", d => colorScale(d)); //radius and color
+
+        //adding labels
+        legend.selectAll(".legend-label")
+            .data(typeDomain)
+            .enter().append("text")
+                .attr("x", 10).attr("y", (d, i) => i * 20 + 4)
+                .text(d => d);
+
 
     }).catch(error => {
         console.error("Fehler beim Laden der CSV-Datei:", error);
