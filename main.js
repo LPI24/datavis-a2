@@ -120,7 +120,7 @@ window.onload = () => {
         //legend
         // right next to plot area
         const legend = svg.append("g")
-            .attr("transform",`translate(${width +20}, 0)`)
+            .attr("transform",`translate(${width +50}, 0)`)
 
         legend.append("text")
             .attr("x", 0).attr("y", -15)
@@ -151,7 +151,39 @@ window.onload = () => {
                 .style("fill", d => colorScale(d.Type))
                 .attr("opacity", 0.9)
                 .on("click", (event, d, filteredData) => updateDetailview(event, d));
-;
+
+//----------------------------------------------------------------------------------------------------
+// Legend for Shape of Data Points
+
+        const formLegend = svg.append("g")
+            .attr("transform", `translate(${width + 50}, 150)`);
+
+        formLegend.append("text")
+            .attr("x", 0).attr("y", -15)
+            .style("font-weight", "bold").text("Drive Type (Shape)");
+
+        // Daten: [0 (Kein AWD), 1 (AWD)]
+        const awdStatus = [
+            { value: 0, label: "No AWD (2WD)" },
+            { value: 1, label: "AWD (All-Wheel Drive)" }
+        ];
+
+        formLegend.selectAll(".form-item")
+            .data(awdStatus)
+            .enter().append("g")
+                .attr("transform", (d, i) => `translate(0, ${i * 25})`) // Vertikaler Abstand
+
+        // Zeichnet das Symbol (Path)
+        formLegend.selectAll("g").append("path")
+            // Ruft die symbolScale auf, um entweder Kreis (0) oder Dreieck (1) zu zeichnen.
+            // Größe 100 ist fest und dient nur der Darstellung in der Legende.
+            .attr("d", d => d3.symbol().type(symbolScale(d.value)).size(100)())
+            .style("fill", "black"); // Feste Farbe, da Farbe bereits Typ kodiert
+
+        // Fügt den Text hinzu
+        formLegend.selectAll("g").append("text")
+            .attr("x", 15).attr("y", 4)
+            .text(d => d.label);
 
 //----------------------------------------------------------------------------------------------------
 //function update detail view for the dots
