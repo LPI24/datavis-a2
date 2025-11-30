@@ -70,16 +70,27 @@ window.onload = () => {
             .domain(d3.extent(filteredData, d => d.Dealer_Cost))
             .range([height, 0]);
 
+        // 1st try with weight aas size of the circle but was difficult to distinguish the different data points hence we ignore that. Pls find attached a Screenshot
         // radius = weight
+        /*
         const rScale = d3.scaleSqrt()
             .domain(d3.extent(filteredData, d => d.Weight))
-            .range([3, 15]);
+            .range([3, 15]); */
 
-        // color = category
         const typeDomain = [...new Set(filteredData.map(d => d.Type))].sort();
+
+
+
         const colorScale = d3.scaleOrdinal()
             .domain(typeDomain)
             .range(d3.schemeCategory10);
+
+
+        // symbole scale for awd
+        const symbolScale = d3.scaleOrdinal()
+            .domain([0, 1])
+            .range([d3.symbolCircle, d3.symbolTriangle]);
+
 
 
  //--------------------------------------------
@@ -133,13 +144,12 @@ window.onload = () => {
         svg.selectAll(".dot")
             .data(filteredData)
             .enter()
-            .append("circle")
+            .append("path")
                 .attr("class", "dot")
-                .attr("cx", d => xScale(d.Horsepower))
-                .attr("cy", d => yScale(d.Dealer_Cost))
-                .attr("r", d => rScale(d.Weight))
+                .attr("transform", d => `translate(${xScale(d.Horsepower)},${yScale(d.Dealer_Cost)})`)
+                .attr("d", d => d3.symbol().type(symbolScale(d.AWD)).size(100)())
                 .style("fill", d => colorScale(d.Type))
-                .attr("opacity", 0.5)
+                .attr("opacity", 0.9)
                 .on("click", (event, d, filteredData) => updateDetailview(event, d));
 ;
 
