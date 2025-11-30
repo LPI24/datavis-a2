@@ -1,5 +1,30 @@
 body {
     height: 100%;
 }
+/* style.css */
 
-/* YOUR CSS CODE GOES HERE */
+/* 1. Hervorhebung (Funktioniert bereits, wird nur für den Kontext wiederholt) */
+.dot.selected {
+    stroke: red;
+    stroke-width: 3px;
+    opacity: 1.0 !important;
+}
+
+/* 2. LAYOUT-REGEL: Platziert die Plot- und Detail-Container nebeneinander */
+#plot-area-wrapper {
+    display: flex; /* Aktiviert Flexbox */
+    align-items: flex-start; /* Stellt sicher, dass Elemente oben ausgerichtet sind */
+    margin: 20px;
+}
+
+/* 3. Detail-Ansicht Styling */
+#detail_view {
+    margin-left: 30px;
+    padding-left: 20px;
+    border-left: 1px solid #ddd;
+}
+
+#info-list {
+    list-style-type: none; /* Entfernt die Standard-Punkte */
+    padding: 0;
+}

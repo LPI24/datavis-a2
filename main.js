@@ -18,6 +18,7 @@ window.onload = () => {
         .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`); //set orogin g to (0,0)
 
+//----------------------------------------------------------------------------------------------------
 //Loading and Parsing Data
 //scatter plot x: horsepower y: dealer cost color: type, size: weight
 
@@ -47,7 +48,9 @@ window.onload = () => {
 
         //console.log("Daten erfolgreich geladen. Gefilterte Punkte:", data.length);
         const filteredData = data.filter(d =>
-            !isNaN(d.Horsepower) && !isNaN(d.Dealer_Cost) && !isNaN(d.Weight)
+            !isNaN(d.Horsepower) &&
+            !isNaN(d.Dealer_Cost) &&
+            !isNaN(d.Weight)
         );
 
         console.log("Nutzbare Punkte nach Filterung:", filteredData.length);
@@ -55,7 +58,7 @@ window.onload = () => {
 
 
 
-
+//----------------------------------------------------------------------------------------------------
 //Define Axis of the plot
         // x-scale = horsepower
         const xScale = d3.scaleLinear()
@@ -79,6 +82,10 @@ window.onload = () => {
             .range(d3.schemeCategory10);
 
 
+ //--------------------------------------------
+        const numberFormat = d3.format(",.0f");
+
+//----------------------------------------------------------------------------------------------------
 //Draw Axis
         // 4.1. X-Axis and Label (Horsepower)
         svg.append("g")
@@ -96,7 +103,7 @@ window.onload = () => {
             .attr("x", 0 - (height / 2)).attr("fill", "black")
             .style("text-anchor", "middle").text("Dealer Cost (USD)");
 
-
+//----------------------------------------------------------------------------------------------------
 //draw legend and data points
 
         //legend
@@ -121,6 +128,52 @@ window.onload = () => {
             .enter().append("text")
                 .attr("x", 10).attr("y", (d, i) => i * 20 + 4)
                 .text(d => d);
+
+        //plotting data
+        svg.selectAll(".dot")
+            .data(filteredData)
+            .enter()
+            .append("circle")
+                .attr("class", "dot")
+                .attr("cx", d => xScale(d.Horsepower))
+                .attr("cy", d => yScale(d.Dealer_Cost))
+                .attr("r", d => rScale(d.Weight))
+                .style("fill", d => colorScale(d.Type))
+                .attr("opacity", 0.5)
+                .on("click", (event, d, filteredData) => updateDetailview(event, d));
+;
+
+//----------------------------------------------------------------------------------------------------
+//function update detail view for the dots
+
+        // main.js (Innerhalb des .then(data) Blocks)
+
+
+
+        function updateDetailview(event, d, dataset) {
+
+            d3.selectAll(".dot").classed("selected", false);
+            d3.select(event.currentTarget).classed("selected", true);
+
+            const infoList = d3.select("#info-list");
+
+            infoList.html(`
+                <li>Name: <b>${filteredData[d].Name}</b></li>
+                <li>Type: ${filteredData[d].Type}</li>
+                <li>AWD: ${filteredData[d].AWD}</li>
+                <li>RWD: ${filteredData[d].RWD}</li>
+                <li>Retail Price: $ ${numberFormat(filteredData[d].Retail_Price)}</li>
+                <li>Dealer Cost: $ ${numberFormat(filteredData[d].Dealer_Cost)}</li>
+                <li>Engine Size: ${filteredData[d].Engine_Size} litre</li>
+            `);
+
+            console.log("Object by klick:", d);
+            console.log("Engine Size Test:", d['Engine Size (l)'], filteredData[d].Engine_Size);
+        }
+
+
+
+
 
 
     }).catch(error => {
