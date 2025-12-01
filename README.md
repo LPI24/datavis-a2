@@ -9,7 +9,7 @@ For the Assignment 2 initially I have chosen the following Variables for the plo
 - Color: Vehicle Type
 - Size (radius): Weight
 
-![Picture1](FirstAttempt.jpg)
+![Picture1](pictures/FirstAttempt.jpg)
 
 Unfortunately, through the size of the circles it was really hard to distinguish the different circles in the plot. Therefore I have tried a new variable set up:
 
@@ -24,7 +24,7 @@ Instead of the weight as the size of a data dot I have chosen the AWD variable i
 - circles for "No AWD"
 - triangle for "AWD"
 
-![Picture2](SecondAttempt.jpg)
+![Picture2](pictures/SecondAttempt.jpg)
 
 Furthermore I decided to change the Detail Overview from a text base solution to a table based solution beneath the plot.
 
@@ -42,7 +42,7 @@ The Star Plot next to the table visualizes the multivariate performance profile 
 
 - Highway Miles Per Gallon (Highway MPG)
 
-![Picture3](finalAttempt.jpg)
+![Picture3](pictures/finalAttempt.jpg)
 
 ## Acknowledgements and Resources
 
