@@ -1,30 +1,54 @@
 body {
+    /* Setzt die Höhe auf 100%, um das Layout besser steuern zu können */
     height: 100%;
-}
-/* style.css */
-
-/* 1. Hervorhebung (Funktioniert bereits, wird nur für den Kontext wiederholt) */
-.dot.selected {
-    stroke: red;
-    stroke-width: 3px;
-    opacity: 1.0 !important;
+    margin: 0;
+    font-family: Arial, sans-serif;
 }
 
-/* 2. LAYOUT-REGEL: Platziert die Plot- und Detail-Container nebeneinander */
-#plot-area-wrapper {
-    display: flex; /* Aktiviert Flexbox */
-    align-items: flex-start; /* Stellt sicher, dass Elemente oben ausgerichtet sind */
-    margin: 20px;
+/* --- D3 Plot Styling --- */
+.dot {
+    cursor: pointer;
+    stroke: none;
 }
 
-/* 3. Detail-Ansicht Styling */
-#detail_view {
-    margin-left: 30px;
-    padding-left: 20px;
-    border-left: 1px solid #ddd;
+/* --- LAYOUT for table and Plot --- */
+#data_comparison_area {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 1500px;
+    margin: 50px auto 20px 20px;
 }
 
-#info-list {
-    list-style-type: none; /* Entfernt die Standard-Punkte */
-    padding: 0;
+#detail_table_container {
+    width: 500px;
+    margin: 0 100px 0 0;
+}
+
+#star_plot_container {
+    width: 500px;
+
+}
+
+#car_details {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+#car_details th, #car_details td {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+#car_details thead th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* highlighting even rows in table*/
+#car_details tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
