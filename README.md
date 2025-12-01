@@ -1,20 +1,30 @@
 # DataVis Assignment 2
+## First Attempt:
+For the Assignment 2 initially I have chosen the following Variables for the plot (as you can see in the picture below):
 
-This repository contains the bare-bones files to start up and solve the second assignment of the DataVis course at TU Dresden. 
+- X-Axis: Horsepower
+- Y-Axis: Dealer Cost
+- Color: Vehicle Type
+- Size (radius): Weight
 
-It also contains the sample cars.csv dataset -- remember, it contains some errors! 
+![Picture1](FirstAttempt.jpg)
 
-## Local development: 
-Pre-requisite: [Node.js](https://nodejs.org/en). Install `serve` using: 
-> npm install serve --global 
+Unfortunately, through the size of the circles it was really hard to distinguish the different circles in the plot. Therefore I have tried a new variable set up:
 
-And start the application using 
-> serve -p 8000 
+## Final Plot:
 
-You should then be able to see your website at [http://localhost:8000](http://localhost:8000). 
+- X-Axis: Horsepower
+- Y-Axis: Dealer Cost
+- Color: Vehicle Type
+- Shape (radius): AWD (y/n)
 
-*Note:* feel free to explore other development environments such as [Vite](https://vite.dev/), [Flask (python)](https://flask.palletsprojects.com/en/stable/), etc. 
+Instead of the weight as the size of a data dot I have chosen the AWD variable in two different shapes:
+- circles for "No AWD"
+- triangle for "AWD"
 
-## Debugging: 
-Feel free to make extensive use of your browser's development tools! 
-In chrome-based browsers, you can simply use Ctrl+J to open the browser console, which will show all the `console.log` and similar that you write in the code. 
+![Picture2](SecondAttempt.jpg)
+
+
+
+## Outlook:
+- flying detail table and star diagram

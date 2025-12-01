@@ -6,7 +6,7 @@ window.onload = () => {
     //1. Define Setup and Dimensions
 
 
-    const margin = {top: 40, right: 200, bottom: 60, left: 70};
+    const margin = {top: 40, right: 225, bottom: 60, left: 70};
     const width = 800 - margin.left - margin.right; // Breite des eigentlichen Plots
     const height = 500 - margin.top - margin.bottom; // Höhe des eigentlichen Plots
 
